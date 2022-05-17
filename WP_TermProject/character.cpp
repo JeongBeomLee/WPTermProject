@@ -172,3 +172,7 @@ void CharRunBack(HWND hWnd, UINT uMsg, UINT_PTR idEvnet, DWORD dwTime)
 		InvalidateRect(hWnd, NULL, false);
 	}
 }
+
+void CharJumpUp(HWND hWnd)
+{
+}

@@ -18,4 +18,5 @@ typedef struct HAND {
 void CALLBACK CharIdle(HWND hWnd, UINT uMsg, UINT_PTR idEvnet, DWORD dwTime);
 void CALLBACK CharRunFront(HWND hWnd, UINT uMsg, UINT_PTR idEvnet, DWORD dwTime);
 void CALLBACK CharRunBack(HWND hWnd, UINT uMsg, UINT_PTR idEvnet, DWORD dwTime);
-void CALLBACK CharJump(HWND hWnd, UINT uMsg, UINT_PTR idEvnet, DWORD dwTime);
+void CharJumpUp(HWND hWnd);
+void CharJumpDown(HWND hWnd);

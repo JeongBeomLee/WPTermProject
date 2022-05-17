@@ -3,8 +3,6 @@
 #include "basic.h"
 #include "character.h"
 
-
-
 PAINTSTRUCT ps;
 HDC hdc;
 HDC printMemDC, copyMemDC;
@@ -47,7 +45,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 }
 
 
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 
@@ -77,6 +74,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CHAR:
 		switch (wParam)
 		{
+		case 'w':
+			KillTimer(hWnd, 1);
+			KillTimer(hWnd, 2);
+			KillTimer(hWnd, 3);
+			player.isJump = TRUE;
+			CharJumpUp(hWnd);
+			break;
 		case 'a':
 			if (player.isRun == FALSE)
 			{
@@ -98,6 +102,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_KEYUP:
 		KillTimer(hWnd, 2);
 		KillTimer(hWnd, 3);
+		KillTimer(hWnd, 4);
 		player.isRun = FALSE;
 		SetTimer(hWnd, 1, 100, CharIdle);
 		break;
