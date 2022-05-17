@@ -175,4 +175,55 @@ void CharRunBack(HWND hWnd, UINT uMsg, UINT_PTR idEvnet, DWORD dwTime)
 
 void CharJumpUp(HWND hWnd)
 {
+	while (player.isJump)
+	{
+		if (player.direction == leftDir)
+		{
+			hdc = GetDC(hWnd);
+			CImage charImage;
+			
+			charImage.Load(L"char//charjumpleft//CharJump0.png");
+
+			printHBIT = CreateCompatibleBitmap(hdc, 1600, 900);
+
+			printMemDC = CreateCompatibleDC(hdc);
+			oldPrintHBIT = (HBITMAP)SelectObject(printMemDC, printHBIT);
+			Rectangle(printMemDC, 0, 0, 1600, 1600);
+			charImage.Draw(printMemDC, player.xPos, player.yPos, 85, 105, 0, 0, 17, 21);
+
+			charImage.Destroy();
+			SelectObject(printMemDC, oldPrintHBIT); DeleteDC(printMemDC);
+			ReleaseDC(hWnd, hdc);
+			player.yPos -= 20;
+			OffsetRect(&player.rect, -20, 0);
+			InvalidateRect(hWnd, NULL, false);
+		}
+		else if (player.direction == rightDir)
+		{
+			hdc = GetDC(hWnd);
+			hdc = GetDC(hWnd);
+			CImage charImage;
+
+			charImage.Load(L"char//charjumpright//CharJump0.png");
+
+			printHBIT = CreateCompatibleBitmap(hdc, 1600, 900);
+
+			printMemDC = CreateCompatibleDC(hdc);
+			oldPrintHBIT = (HBITMAP)SelectObject(printMemDC, printHBIT);
+			Rectangle(printMemDC, 0, 0, 1600, 1600);
+			charImage.Draw(printMemDC, player.xPos, player.yPos, 85, 105, 0, 0, 17, 21);
+
+			charImage.Destroy();
+			SelectObject(printMemDC, oldPrintHBIT); DeleteDC(printMemDC);
+			ReleaseDC(hWnd, hdc);;
+			player.yPos -= 20;
+			OffsetRect(&player.rect, -20, 0);
+			InvalidateRect(hWnd, NULL, false);
+		}
+
+		if (player.yPos == 200)
+		{
+			player.isJump = FALSE;
+		}
+	}
 }
