@@ -50,24 +50,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 
 	switch (iMessage) {
 	case WM_CREATE:
-		SetTimer(hWnd, 1, 100, CharIdle);
+		SetTimer(hWnd, 1, 75, TimeProc);
 		player.xPos = 0;
 		player.yPos = 400;
 		player.rect.left = 0;
 		player.rect.right = 85;
 		player.rect.top = 400;
 		player.rect.bottom = 505;
-		player.isRun = FALSE;
-		player.isJump = FALSE;
+		player.status = idle;
 		player.direction = rightDir;
+		player.isJump = FALSE;
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		printMemDC = CreateCompatibleDC(hdc);
 		oldPrintHBIT = (HBITMAP)SelectObject(printMemDC, printHBIT);
-
 		StretchBlt(hdc, 0, 0, 1600, 1600, printMemDC, 0, 0, 1600, 1600, SRCCOPY);
-
 		SelectObject(printMemDC, oldPrintHBIT); DeleteDC(printMemDC);
 		EndPaint(hWnd, &ps);
 		break;
@@ -75,38 +73,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case 'w':
-			KillTimer(hWnd, 1);
-			KillTimer(hWnd, 2);
-			KillTimer(hWnd, 3);
 			player.isJump = TRUE;
-			CharJumpUp(hWnd);
+			player.status = jump;
 			break;
 		case 'a':
-			if (player.isRun == FALSE)
-			{
-				KillTimer(hWnd, 1);
-				SetTimer(hWnd, 3, 50, CharRunBack);
-				player.isRun = TRUE;
-			}
+			player.status = runBack;
 			break;
 		case 'd':
-			if (player.isRun == FALSE)
-			{
-				KillTimer(hWnd, 1);
-				SetTimer(hWnd, 2, 50, CharRunFront);
-				player.isRun = TRUE;
-			}
+			player.status = runFront;
 			break;
 		}
 		break;
 	case WM_KEYUP:
-		KillTimer(hWnd, 2);
-		KillTimer(hWnd, 3);
-		KillTimer(hWnd, 4);
-		player.isRun = FALSE;
-		SetTimer(hWnd, 1, 100, CharIdle);
+		if (!player.isJump && !player.isDown)
+		{
+			player.status = idle;
+		}
 		break;
 	case WM_MOUSEMOVE:
+		// 마우스 위치를 기준으로 플레이어 방향 설정
 		mouse.x = LOWORD(lParam);
 		mouse.y = HIWORD(lParam);
 		if (mouse.x > (player.rect.left + player.rect.right) / 2)
