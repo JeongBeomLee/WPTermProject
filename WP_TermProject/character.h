@@ -3,6 +3,7 @@
 
 typedef struct CHARACTER {
 	RECT rect;
+
 	BOOL direction;
 	BOOL isJump;
 	BOOL isDown;
@@ -16,10 +17,8 @@ typedef struct HAND {
 
 }HAND;
 
-// 타이머 프로시저 함수
-void CALLBACK TimeProc(HWND hWnd, UINT uMsg, UINT_PTR idEvnet, DWORD dwTime);
-
 // 캐릭터 관련 함수들
+void printChar();
 void CharIdle();
 void CharRunFront();
 void CharRunBack();

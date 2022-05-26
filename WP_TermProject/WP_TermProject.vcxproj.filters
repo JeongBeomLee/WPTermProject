@@ -21,12 +21,24 @@
     <ClCompile Include="character.cpp">
       <Filter>헤더 파일</Filter>
     </ClCompile>
+    <ClCompile Include="batRed.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeProc.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="basic.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="batRed.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeProc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

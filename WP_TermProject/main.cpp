@@ -1,7 +1,9 @@
 #include <windows.h>
 #include <atlImage.h>
 #include "basic.h"
+#include "batRed.h"
 #include "character.h"
+#include "TimeProc.h"
 
 PAINTSTRUCT ps;
 HDC hdc;
@@ -50,7 +52,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 
 	switch (iMessage) {
 	case WM_CREATE:
-		SetTimer(hWnd, 1, 75, TimeProc);
+		SetTimer(hWnd, 1, 80, TimeProc);
 		player.xPos = 0;
 		player.yPos = 400;
 		player.rect.left = 0;
@@ -65,27 +67,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		hdc = BeginPaint(hWnd, &ps);
 		printMemDC = CreateCompatibleDC(hdc);
 		oldPrintHBIT = (HBITMAP)SelectObject(printMemDC, printHBIT);
-		StretchBlt(hdc, 0, 0, 1600, 1600, printMemDC, 0, 0, 1600, 1600, SRCCOPY);
+		BitBlt(hdc, 0, 0, 1600, 900, printMemDC, 0, 0, SRCCOPY);
 		SelectObject(printMemDC, oldPrintHBIT); DeleteDC(printMemDC);
 		EndPaint(hWnd, &ps);
 		break;
-	case WM_CHAR:
-		switch (wParam)
+	case WM_KEYDOWN:
+		if (GetAsyncKeyState(VK_A))
 		{
-		case 'w':
-			player.isJump = TRUE;
+			if (player.status != jump)
+			{
+				player.status = runBack;
+			}
+		}
+		if (GetAsyncKeyState(VK_D))
+		{
+			if (player.status != jump)
+			{
+				player.status = runFront;
+			}
+		}
+		if (GetAsyncKeyState(VK_W))
+		{
 			player.status = jump;
-			break;
-		case 'a':
-			player.status = runBack;
-			break;
-		case 'd':
-			player.status = runFront;
-			break;
 		}
 		break;
 	case WM_KEYUP:
-		if (!player.isJump && !player.isDown)
+		if (player.status != jump)
 		{
 			player.status = idle;
 		}
